@@ -2,6 +2,9 @@ package main.scala
 
 class MarkovChain[S](transitionMap: Map[S, MarkovTransitionSet[S]]) {
 
+  /**
+   * Default construcotrs creates an empty Markov Chain
+   */
   def this() = this(Map[S, MarkovTransitionSet[S]]())
 
   def addTransition(prevState: S, nextState: S) = {
@@ -13,13 +16,23 @@ class MarkovChain[S](transitionMap: Map[S, MarkovTransitionSet[S]]) {
     new MarkovChain(transitionMap.updated(prevState, newTransitions));
   }
 
-  def states() = transitionMap.keys
-
+  // TODO: Define exactly what a trasition's probability is
   def transitionProbability(state1: S, state2: S) = {
     transitionMap.get(state1) match {
       case Some(transitionSet) => transitionSet.probabilityFor(state2)
       case None => 0
     }
+  }
+
+  def transitionsFor(state: S) = {
+    transitionMap.get(state) match {
+      case Some(transitionSet) => transitionSet.toList
+      case None => List[(S, Double)]();
+    }
+  }
+
+  def states() = {
+    transitionMap.keys;
   }
 
 }
@@ -40,13 +53,17 @@ class MarkovTransitionSet[S](transitionCounter: Map[S, Int]) {
     else 0
   }
 
-  def totalCount() = {
+  def totalCount():Double = {
     val counts = transitionCounter.values
-    counts.foldLeft(0)((a, b) => a+b)
+    counts.foldLeft(0)((a, b) => a+b).toDouble
   }
 
   def probabilityFor(state: S) = {
-    countFor(state).toFloat/this.totalCount
+    countFor(state).toDouble/this.totalCount
+  }
+
+  def toList() = {
+    transitionCounter.toList.map(tup => (tup._1, tup._2.toDouble/totalCount));
   }
 
 }
