@@ -1,4 +1,4 @@
-package main.scala
+package com.circuitsofimagination.markovcahin
 
 class MarkovChain[S](transitionMap: Map[S, MarkovTransitionSet[S]]) {
 

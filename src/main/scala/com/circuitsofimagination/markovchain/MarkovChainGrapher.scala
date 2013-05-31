@@ -1,4 +1,4 @@
-package main.scala
+package com.circuitsofimagination.markovcahin
 
 object MarkovChainGrapher {
   
@@ -16,7 +16,7 @@ object MarkovChainGrapher {
     "}";
   }
 
-  def dotContents[S](title: String, chain: MarkovChain[S]):String = {
+  def graphvizulize[S](title: String, chain: MarkovChain[S]):String = {
     val states = chain.states;
     var allTransitions = List[String]();
     for(state <- states) {
@@ -26,7 +26,7 @@ object MarkovChainGrapher {
   }
 
   def transitionToString[S](initialState: S, probability: Double, nextState: S) = {
-    "\"%s\" -> \"%s\" [ label = \"%f\" ];\n".format(initialState.toString, nextState.toString, probability);
+    "\"%s\" -> \"%s\" [ label = \"%3.2f\" ];\n".format(initialState.toString, nextState.toString, probability);
   }
 }
 // vim: set ts=4 sw=4 et:
