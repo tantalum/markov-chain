@@ -19,6 +19,7 @@ object MarkovChainGrapher {
   def graphvizulize[S](title: String, chain: MarkovChain[S]):String = {
     val states = chain.states;
     var allTransitions = List[String]();
+    // ERROR: This causes an infinite loop if there is a loop in the transition chain
     for(state <- states) {
         allTransitions = chain.transitionsFor(state).map(tup => transitionToString(state, tup._2, tup._1)) ++ allTransitions
     }
