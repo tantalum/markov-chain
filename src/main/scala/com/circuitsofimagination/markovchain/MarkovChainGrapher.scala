@@ -5,7 +5,6 @@ object MarkovChainGrapher {
   def header(title: String):String = {
     """digraph markov_cahin{
           rankdir=LR;
-          size="8,5"
           label = "%s"
           node [shape = circle];
 
