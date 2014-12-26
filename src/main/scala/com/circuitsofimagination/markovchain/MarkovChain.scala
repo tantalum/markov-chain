@@ -16,7 +16,7 @@ class MarkovChain[S](transitionMap: Map[S, MarkovTransitionSet[S]]) {
     new MarkovChain(transitionMap.updated(prevState, newTransitions));
   }
 
-  // TODO: Define exactly what a trasition's probability is
+  // TODO: What if there are more then one step between the states
   def transitionProbability(state1: S, state2: S) = {
     transitionMap.get(state1) match {
       case Some(transitionSet) => transitionSet.probabilityFor(state2)
