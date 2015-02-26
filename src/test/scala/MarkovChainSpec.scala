@@ -6,7 +6,7 @@ import org.scalatest.BeforeAndAfter
 import com.circuitsofimagination.markovcahin._
 
 class MarkovChainSpec extends FunSpec with BeforeAndAfter {
-  
+
   var chain: MarkovChain[String] = _
 
   before {
@@ -35,6 +35,14 @@ class MarkovChainSpec extends FunSpec with BeforeAndAfter {
       chain = chain.addTransition("one", "three");
       chain = chain.addTransition("one", "four");
       assert(chain.transitionProbability("one", "one") === 0.25)
+    }
+
+    it("Should generate the graph") {
+      chain = chain.addTransition("one", "one");
+      chain = chain.addTransition("one", "two");
+      chain = chain.addTransition("one", "three");
+      chain = chain.addTransition("one", "four");
+      println(MarkovChainGrapher.graphvizulize("Test Graph: ", chain))
     }
   }
 }
