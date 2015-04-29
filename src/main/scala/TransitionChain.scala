@@ -51,7 +51,7 @@ object TransitionParser extends RegexParsers {
   override def skipWhitespace = true
   private def word : Parser[String] = regex(new Regex("[a-zA-Z0-9\\.]*"))
   //TODO: End chain at newline
-  private def transition : Parser[List[String]] = repsep(word, "->") 
+  private def transition : Parser[List[String]] = repsep(word, "->")
   def parseTransitions(src: String): List[String] = parseAll(transition, src) match {
     case Success(result, _) => result
     case failure: NoSuccess => scala.sys.error("Error parsing chain data: "+failure.msg)

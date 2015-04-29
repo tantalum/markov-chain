@@ -4,10 +4,12 @@ name := "Markov Chain"
 
 version := "1.0"
 
-scalaVersion := "2.9.1"
+scalaVersion := "2.11.1"
 
 // Add scala test to the dependencies
-libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.1" % "test"
+libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test"
+
+libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3"
 
 // Source directories
 sourceDirectories in Compile += file("src/com/circuitsofimagination/markovcahin")

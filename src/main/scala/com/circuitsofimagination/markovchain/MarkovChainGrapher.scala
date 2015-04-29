@@ -1,9 +1,9 @@
 package com.circuitsofimagination.markovcahin
 
 object MarkovChainGrapher {
-  
+
   def header(title: String):String = {
-    """digraph markov_cahin{
+    """digraph markov_chain{
           rankdir=LR;
           label = "%s"
           node [shape = circle];

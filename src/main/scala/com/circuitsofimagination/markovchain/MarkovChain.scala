@@ -3,20 +3,20 @@ package com.circuitsofimagination.markovcahin
 class MarkovChain[S](transitionMap: Map[S, MarkovTransitionSet[S]]) {
 
   /**
-   * Default construcotrs creates an empty Markov Chain
+   * Default constructors creates an empty Markov Chain
    */
   def this() = this(Map[S, MarkovTransitionSet[S]]())
 
+  // Create a new MarkovChain.
   def addTransition(prevState: S, nextState: S) = {
-    val transitions = 
+    val transitions =
       if (transitionMap.contains(prevState)) transitionMap(prevState);
       else new MarkovTransitionSet[S]()
-          
+
     val newTransitions = transitions.addTransition(nextState);
     new MarkovChain(transitionMap.updated(prevState, newTransitions));
   }
 
-  // TODO: What if there are more then one step between the states
   def transitionProbability(state1: S, state2: S) = {
     transitionMap.get(state1) match {
       case Some(transitionSet) => transitionSet.probabilityFor(state2)
@@ -32,7 +32,7 @@ class MarkovChain[S](transitionMap: Map[S, MarkovTransitionSet[S]]) {
   }
 
   def states() = {
-    transitionMap.keys;
+    transitionMap.keys
   }
 
 }
@@ -43,27 +43,33 @@ class MarkovTransitionSet[S](transitionCounter: Map[S, Int]) {
 
   def apply(state: S) = probabilityFor(state)
 
+  // Create a new MarkovTransitionSet.
   def addTransition(state: S) = {
     val count = countFor(state);
-    new MarkovTransitionSet[S](transitionCounter.updated(state, count+1));
+    new MarkovTransitionSet[S](
+      transitionCounter.updated(state, count+1)
+    );
   }
 
-  def countFor(state: S) = { 
-    if(transitionCounter.contains(state)) transitionCounter(state);
-    else 0
+  def countFor(state: S) = {
+    if(transitionCounter.contains(state))
+      transitionCounter(state);
+    else
+      0
   }
 
-  def totalCount():Double = {
+  def totalCount(): Double = {
     val counts = transitionCounter.values
-    counts.foldLeft(0)((a, b) => a+b).toDouble
+    val i = counts.foldLeft(0)((a, b) => a + b)
+    i
   }
 
   def probabilityFor(state: S) = {
-    countFor(state).toDouble/this.totalCount
+    countFor(state).toDouble / this.totalCount
   }
 
   def toList() = {
-    transitionCounter.toList.map(tup => (tup._1, tup._2.toDouble/totalCount));
+    transitionCounter.toList.map(tup => (tup._1, tup._2.toDouble / totalCount));
   }
 
 }
